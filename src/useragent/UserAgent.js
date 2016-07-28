@@ -17,6 +17,12 @@ const VersionRange = require('VersionRange');
 const mapObject = require('mapObject');
 const memoizeStringOnly = require('memoizeStringOnly');
 
+// Dont rely on internal - IE does not support
+function startsWith(str, searchString, position){
+	position = position || 0;
+	return str.substr(position, searchString.length) === searchString;
+};
+
 /**
  * Checks to see whether `name` and `version` satisfy `query`.
  *
@@ -33,7 +39,7 @@ function compare(name, version, query, normalizer) {
   }
 
   // check for non-matching names
-  if (!query.startsWith(name)) {
+  if (!startsWith(query,name)) {
     return false;
   }
 
